@@ -6,8 +6,32 @@ class Menu extends Component {
     constructor(props) {
         super(props);
         this.state={
+          selectedDish: null
             
         }
+    }
+
+    onDishSelect(dish){
+      this.setState({selectedDish:dish});
+
+    }
+
+    renderDish(dish){
+      if(dish!=null){
+        return(
+        <card>
+          <CardImg width="100%" object src={dish.image} alt={dish.name} />
+          <CardBody>
+            <CardTitle>{dish.name}</CardTitle>
+            <CardText>{dish.price}</CardText>
+          </CardBody>
+
+        </card>
+        );
+      }
+      
+        
+      
     }
     render() {
       console.log(this.props)
@@ -15,7 +39,7 @@ class Menu extends Component {
           
             return (
               <div key={dish.id} className="col-12 col-md-5 m-1">
-                <Card>
+                <Card onClick= {()=> this.onDishSelect(dish)}>
                     <CardImg width="100%" object src={dish.image} alt={dish.name} />
                     <CardImgOverlay>
                       <CardTitle>{dish.name}</CardTitle>
@@ -33,8 +57,12 @@ class Menu extends Component {
             <div className="row">
               
                   {menu}
+                  </div>
+                  <div>
+                    {this.renderDish(this.state.selectedDish)}
+                  </div>
                
-            </div>
+            
           </div>
         );
     }
